@@ -30,7 +30,7 @@ BuildRequires: libqt5core-devel libqt5xml-devel libxapian-devel
 
 %if 0%{?suse_version}
 BuildRequires: gcc7 gcc7-c++
-BuildRequires: fdupes libbz2-devel 
+BuildRequires: fdupes libbz2-devel
 BuildRequires: libqt5-qtbase-devel libqt5-qttools-devel
 BuildRequires: libxapian-devel update-desktop-files
 %endif
