@@ -8,4 +8,4 @@ Homepage: https://retroshare.cc
 Standards-Version: 3.8.1
 Build-Depends: cmake, debhelper (>= 7), doxygen, libglib2.0-dev, libssl-dev, libbz2-dev, libqt5x11extras5-dev, libsqlcipher-dev, libupnp-dev, libxapian-dev, libxss-dev, qt5-default, qtbase5-dev, qtmultimedia5-dev, qttools5-dev
 Files:
- 1616d849945d08c1b5d64294d8b7c087 24031844 RetroShare.tar.gz
+ 17dfe26cb21c6b0b1a3614253e8403ce 24031856 RetroShare.tar.gz
