@@ -8,4 +8,5 @@
   <package name="sqlcipher_centos" state=" " />
   <package name="sqlcipher_debian" state=" " />
   <package name="sqlcipher_debian9" state=" " />
+  <package name="retroshare-common-unstable" state=" " />
 </project>
