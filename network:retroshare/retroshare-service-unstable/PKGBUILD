@@ -7,8 +7,8 @@
 # Contributor: funkyou
 
 pkgname=retroshare-service-unstable
-pkgver=stable
-pkgrel=0
+pkgver=unstable
+pkgrel=20190724
 pkgdesc="Serverless encrypted instant messenger with filesharing, chatgroups, e-mail. System service version."
 arch=('i686' 'x86_64' 'armv6h' 'armv7h')
 url="https://retroshare.cc/"
