@@ -14,7 +14,7 @@ function define_default_value()
 	[ -z "${!VAR_NAME}" ] && export ${VAR_NAME}="${DEFAULT_VALUE}"
 }
 
-define_default_value GIT_DIR "${HOME}/Development/rs-develop/.git"
+define_default_value GIT_DIR "$(dirname $BASH_SOURCE)/../../.git/"
 define_default_value WORK_DIR "$(mktemp --directory)/"
 
 ORIG_DIR="$(pwd)"
