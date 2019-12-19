@@ -9,4 +9,4 @@ Standards-Version: 3.8.1
 Build-Depends: cmake, debhelper (>= 7), doxygen, libglib2.0-dev, libssl-dev, libbz2-dev, libqt5x11extras5-dev, libsqlcipher-dev, libupnp-dev, libxapian-dev, libxss-dev, qt5-default, qtbase5-dev, qtmultimedia5-dev, qttools5-dev
 Depends: retroshare-common-unstable
 Files:
- 9d083f63de83ca888b32143e49f98483 24031619 RetroShare.tar.gz
+ 51da1a18003365554ff27b05c0356a8b 23803894 RetroShare.tar.gz

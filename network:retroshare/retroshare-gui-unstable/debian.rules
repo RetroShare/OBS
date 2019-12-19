@@ -11,7 +11,7 @@ configure-stamp:
 	echo 'true'                          >> /tmp/configJsonApi.sh
 	chmod +x /tmp/configJsonApi.sh
 	qmake \
-	$$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
+	$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release PREFIX=/usr LIB_DIR=/usr/lib \
 	CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_nogui \
 	CONFIG+=retroshare_gui CONFIG+=no_tests CONFIG+=no_libresapi \

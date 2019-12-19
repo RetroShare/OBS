@@ -5,8 +5,7 @@ configure-stamp:
 	dh_testdir
 	qmake --version
 	qmake CONFIG-=debug CONFIG+=release PREFIX=/usr LIB_DIR=/usr/lib \
-    RS_MAJOR_VERSION=0 RS_MINOR_VERSION=6 RS_MINI_VERSION=9999 \
-    RS_EXTRA_VERSION="-retroshare-service-OBS-deb" \
+	$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_nogui \
 	CONFIG+=no_retroshare_gui CONFIG+=no_tests CONFIG+=no_libresapi \
 	CONFIG+=no_libresapihttpserver CONFIG+=no_libresapilocalserver \

@@ -86,8 +86,7 @@ BUILD_CXX="QMAKE_CXX=g++-7"
 $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	BIN_DIR="%{_bindir}" \
 	LIB_DIR="%{_libdir}" DATA_DIR="%{_datadir}/retroshare" \
-    RS_MAJOR_VERSION=0 RS_MINOR_VERSION=6 RS_MINI_VERSION=9999 \
-    RS_EXTRA_VERSION="-retroshare-service-OBS-RPM" \
+	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
     CONFIG-=debug \
     CONFIG+=ipv6 CONFIG+=no_retroshare_android_service \
     CONFIG+=no_retroshare_android_notify_service \
