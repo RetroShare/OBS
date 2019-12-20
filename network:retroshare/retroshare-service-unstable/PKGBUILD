@@ -27,18 +27,22 @@ prepare() {
 }
 
 build() {
+	[ "$(doxygen --version)" == "1.8.16" ] && {
+		echo Doxygen 1.8.16 is not supported due to \
+			https://github.com/doxygen/doxygen/issues/7236 please report it \
+			to your distribution
+		exit -1
+	}
+
 	cd "${srcdir}/RetroShare"
 	qmake-qt5 PREFIX=/usr DATA_DIR=/usr/share/retroshare \
-    	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
-    	CONFIG-=debug \
-    	CONFIG+=ipv6 CONFIG+=no_retroshare_android_service \
-        CONFIG+=no_retroshare_android_notify_service \
-        CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_nogui \
-        CONFIG+=no_retroshare_gui CONFIG+=no_tests CONFIG+=no_libresapi \
-        CONFIG+=no_libresapihttpserver CONFIG+=no_libresapilocalserver \
+		$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
+		CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
+		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_gui \
+		CONFIG+=no_tests \
 		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
-        CONFIG+=release
-	make -j$(nproc) || make -j$(nproc) || make
+		RetroShare.pro
+	make -j$(nproc)
 }
 
 package() {

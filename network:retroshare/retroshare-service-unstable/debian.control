@@ -7,7 +7,7 @@ Homepage: https://retroshare.cc
 
 Package: retroshare-service-unstable
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: retroshare-common-unstable, ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends
  RetroShare is a Free and Open Source, private and secure decentralized 
  communication platform. It lets you to securely chat and share files with your 

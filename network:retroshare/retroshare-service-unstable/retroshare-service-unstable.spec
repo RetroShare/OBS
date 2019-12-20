@@ -9,10 +9,34 @@ Source0:       RetroShare.tar.gz
 #Patch0:       various.patch
 BuildRoot:     %{_tmppath}/%{name}
 Conflicts:     retroshare-service
-BuildRequires: cmake doxygen git libupnp-devel openssl-devel sqlcipher-devel
+BuildRequires: cmake git openssl-devel
 
 %if %{defined centos_version}
-BuildRequires: qt5-qtbase-devel qt5-qttools-devel qt5-qttools-static
+# Neither miniupnpc-devel nor libupnp-devel are available on CentOS
+%else
+BuildRequires: libupnp-devel
+%endif
+
+%if %{defined centos_version}
+# SQLCipher is not availabe on CentOS
+BuildRequires: sqlite-devel
+%else
+BuildRequires: sqlcipher-devel
+%endif
+
+%if 0%{?centos_version} == 700 || 0%{?sle_version} == 120300
+# rpm on CentOS 7 and openSUSE Leap 42.3 doesn't support boolean dependencies
+BuildRequires: doxygen
+%else
+# Doxygen 1.8.16 bug https://github.com/doxygen/doxygen/issues/7236 breaks build
+BuildRequires: (doxygen < 1.8.16 or doxygen > 1.8.16)
+%endif
+
+%if %{defined centos_version}
+BuildRequires: qt5-qtbase-devel
+%endif
+
+%if 0%{?centos_version} == 700
 BuildRequires: devtoolset-7-toolchain devtoolset-7-libstdc++-devel
 %endif
 
@@ -35,7 +59,8 @@ BuildRequires: libqt5-qtbase-devel libqt5-qttools-devel
 BuildRequires: libxapian-devel update-desktop-files
 %endif
 
-%if 0%{?fedora_version} >= 27
+# {?mageia} > 7
+%if 0%{?fedora_version} >= 27 || 0%{?centos_version} >= 800
 %undefine _debugsource_packages
 %undefine _debuginfo_subpackages
 %endif
@@ -54,9 +79,19 @@ see https://retroshare.cc/
 
 %prep
 %setup -n RetroShare
-#%patch0 -p0
+#%%patch0 -p0
 
 %build
+
+echo centos_version: %{?centos_version} mageia: %{?mageia} \
+	mageia_version: %{?mageia_version}
+
+[ "$(doxygen --version)" == "1.8.16" ] && {
+	echo Doxygen 1.8.16 is not supported due to \
+		https://github.com/doxygen/doxygen/issues/7236 please report it \
+		to your distribution
+	exit -1
+}
 
 nproc
 qmake --version || qmake-qt5 --version
@@ -69,8 +104,13 @@ BUILD_DEEPSEARCH="CONFIG+=rs_deep_search"
 QMAKE="qmake-qt5"
 
 %if %{defined centos_version}
-# Xapian is not availabe on Centos 7
+# Xapian is not availabe on CentOS
 BUILD_DEEPSEARCH="CONFIG+=no_rs_deep_search"
+# SQLCipher is not availabe on CentOS
+BUILD_SQLCIPHER="CONFIG+=no_sqlcipher"
+%endif
+
+%if 0%{?centos_version} == 700
 source /opt/rh/devtoolset-7/enable
 %endif
 
@@ -84,24 +124,20 @@ BUILD_CXX="QMAKE_CXX=g++-7"
 %endif
 
 $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
-	BIN_DIR="%{_bindir}" \
-	LIB_DIR="%{_libdir}" DATA_DIR="%{_datadir}/retroshare" \
+	BIN_DIR="%{_bindir}" LIB_DIR="%{_libdir}" \
+	DATA_DIR="%{_datadir}/retroshare" \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
-    CONFIG-=debug \
-    CONFIG+=ipv6 CONFIG+=no_retroshare_android_service \
-    CONFIG+=no_retroshare_android_notify_service \
-    CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_nogui \
-    CONFIG+=no_retroshare_gui CONFIG+=no_tests CONFIG+=no_libresapi \
-    CONFIG+=no_libresapihttpserver CONFIG+=no_libresapilocalserver \
-    CONFIG+=retroshare_service CONFIG+=rs_jsonapi ${BUILD_DEEPSEARCH} \
-    CONFIG+=release RetroShare.pro
-make -j$(nproc) || make -j$(nproc) || make
+	CONFIG+=release CONFIG-=debug CONFIG+=ipv6 CONFIG+=no_retroshare_gui \
+	CONFIG+=no_tests CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
+	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
+	RetroShare.pro
+make -j$(nproc)
 
 %install
 rm -rf $RPM_BUILD_ROOT
 make INSTALL_ROOT=$RPM_BUILD_ROOT install
 
-%if 0%{?centos_version} < 800
+%if %{defined centos_version} || %{defined mageia}
 %else
 %fdupes %{buildroot}/%{_prefix}
 %endif
