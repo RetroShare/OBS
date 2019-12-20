@@ -59,7 +59,6 @@ BuildRequires: libqt5-qtbase-devel libqt5-qttools-devel
 BuildRequires: libxapian-devel update-desktop-files
 %endif
 
-# {?mageia} > 7
 %if 0%{?fedora_version} >= 27 || 0%{?centos_version} >= 800
 %undefine _debugsource_packages
 %undefine _debuginfo_subpackages
@@ -150,5 +149,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/retroshare-service
 %defattr(644, root, root)
 %{_datadir}/retroshare
+%{_datadir}/retroshare/bdboot.txt
 
 %changelog
