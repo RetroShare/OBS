@@ -8,4 +8,4 @@ Homepage: https://retroshare.cc
 Standards-Version: 3.8.1
 Build-Depends: debhelper (>= 7)
 Files:
- 9d083f63de83ca888b32143e49f98483 24031619 RetroShare.tar.gz
+DEBTRANSFORM-TAR RetroShare.tar.gz
