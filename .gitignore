@@ -1,3 +1,4 @@
 network\:retroshare/*/*.tar.*
 network\:retroshare/*/.osc/*
 network\:retroshare/.osc/_build_repositories
+network\:retroshare/*/binaries/
