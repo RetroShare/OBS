@@ -20,7 +20,7 @@ conflicts=('retroshare-service')
 
 source=(RetroShare.tar.gz)
 
-md5sums=('51da1a18003365554ff27b05c0356a8b')
+md5sums=('980ab93805dda54eeca6e7c255d74a58')
 
 prepare() {
 	cd "${srcdir}/RetroShare"

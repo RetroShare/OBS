@@ -9,7 +9,7 @@ configure-stamp:
 	$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release PREFIX=/usr LIB_DIR=/usr/lib \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service CONFIG+=rs_deep_search CONFIG+=c++11 \
+	CONFIG+=no_retroshare_service CONFIG+=rs_deep_search \
 	CONFIG+=rs_jsonapi \
 	RetroShare.pro
 	touch $@
