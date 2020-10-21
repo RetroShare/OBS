@@ -25,6 +25,7 @@ script:
   - cd $BUILD_SOURCE_DIR
   - tar -xf RetroShare.tar.gz
   - cd RetroShare
+  - qmake-qt5 --version
   - gcc --version
   - ls $(which gcc)*
   - ls $(which g++)*

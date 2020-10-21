@@ -37,7 +37,9 @@ BuildRequires: qt5-qtbase-devel
 %endif
 
 %if 0%{?centos_version} == 700
-BuildRequires: devtoolset-7-toolchain devtoolset-7-libstdc++-devel
+BuildRequires: devtoolset-9-toolchain devtoolset-9-libstdc++-devel
+# devtoolset-X-gdb require to specify either python-libs or python27-python-libs
+BuildRequires: python27-python-libs
 %endif
 
 %if 0%{?fedora_version}
@@ -94,6 +96,7 @@ echo centos_version: %{?centos_version} mageia: %{?mageia} \
 
 nproc
 qmake --version || qmake-qt5 --version
+gcc --version
 ls $(which gcc)*
 ls $(which g++)*
 
@@ -110,7 +113,7 @@ BUILD_SQLCIPHER="CONFIG+=no_sqlcipher"
 %endif
 
 %if 0%{?centos_version} == 700
-source /opt/rh/devtoolset-7/enable
+source /opt/rh/devtoolset-9/enable
 %endif
 
 %if %{defined mageia}
@@ -126,8 +129,9 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	BIN_DIR="%{_bindir}" LIB_DIR="%{_libdir}" \
 	DATA_DIR="%{_datadir}/retroshare" \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
-	CONFIG+=release CONFIG-=debug CONFIG+=ipv6 CONFIG+=no_retroshare_gui \
+	CONFIG+=release CONFIG-=debug CONFIG+=no_retroshare_gui \
 	CONFIG+=no_tests CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
+	CONFIG+=c++14 \
 	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
 	RetroShare.pro
 make -j$(nproc)

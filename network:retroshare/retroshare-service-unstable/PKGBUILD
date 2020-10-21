@@ -10,7 +10,7 @@ pkgname=retroshare-service-unstable
 pkgver=unstable
 pkgrel=20190724
 pkgdesc="Serverless encrypted instant messenger with filesharing, chatgroups, e-mail. System service version."
-arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://retroshare.cc/"
 license=('AGPL' 'GPL' 'LGPL')
 depends=('bzip2' 'libupnp' 'libzip' 'openssl' 'rapidjson' 'sqlcipher' 'xapian-core')
@@ -19,8 +19,7 @@ provides=('retroshare-service')
 conflicts=('retroshare-service')
 
 source=(RetroShare.tar.gz)
-
-md5sums=('980ab93805dda54eeca6e7c255d74a58')
+md5sums=(SKIP)
 
 prepare() {
 	cd "${srcdir}/RetroShare"
@@ -33,6 +32,9 @@ build() {
 			to your distribution
 		exit -1
 	}
+
+	qmake-qt5 --version
+	gcc --version
 
 	cd "${srcdir}/RetroShare"
 	qmake-qt5 PREFIX=/usr DATA_DIR=/usr/share/retroshare \
