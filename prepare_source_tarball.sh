@@ -76,8 +76,8 @@ echo "###"
 ## Debian Description
 DEB_DESCR_GUI="RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
 DEB_DESCR_CMN="RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
-sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}/g" ${DEB_DESCR_GUI}
-sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}/g" ${DEB_DESCR_CMN}
+sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}-1/g" ${DEB_DESCR_GUI}
+sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}-1/g" ${DEB_DESCR_CMN}
 echo "### Debian GUI Description"
 cat ${DEB_DESCR_GUI}
 echo "###"
