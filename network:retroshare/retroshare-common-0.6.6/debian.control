@@ -1,0 +1,12 @@
+Source: retroshare-common
+Section: devel
+Priority: standard
+Maintainer: Gioacchino Mazzurco <gio@eigenlab.org>
+Standards-Version: 3.9.3
+Homepage: https://retroshare.cc
+
+Package: retroshare-common
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Secure communication with friends
+ Common files for RetroShare packages.

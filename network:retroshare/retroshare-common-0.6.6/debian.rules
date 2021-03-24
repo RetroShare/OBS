@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	touch $@
+
+build: build-stamp
+build-stamp: configure-stamp
+	dh_testdir
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f configure-stamp build-stamp
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	mkdir -p $(CURDIR)/debian/tmp/usr/share/retroshare/
+	cp libbitdht/src/bitdht/bdboot.txt $(CURDIR)/debian/tmp/usr/share/retroshare/bdboot.txt
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_install --list-missing
+	#dh_installdocs
+	#dh_installexamples
+	#dh_installman
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
