@@ -61,7 +61,9 @@ BuildRequires: libqt5gui-devel libqt5printsupport-devel
 %endif
 
 %if 0%{?suse_version}
+%if %{suse_version} != 1550
 BuildRequires: gcc7 gcc7-c++
+%endif
 BuildRequires: fdupes libbz2-devel 
 BuildRequires: libqt5-qtbase-devel libqt5-qttools-devel
 BuildRequires: libxapian-devel update-desktop-files
@@ -127,7 +129,7 @@ source /opt/rh/devtoolset-9/enable
 QMAKE="qmake"
 %endif
 
-%if 0%{?suse_version}
+%if %{defined suse_version} && 0%{?suse_version} != 1550
 BUILD_CC="QMAKE_CC=gcc-7"
 BUILD_CXX="QMAKE_CXX=g++-7"
 %endif
