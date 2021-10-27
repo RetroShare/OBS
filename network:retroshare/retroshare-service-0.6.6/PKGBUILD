@@ -26,13 +26,6 @@ prepare() {
 }
 
 build() {
-	[ "$(doxygen --version)" == "1.8.16" ] && {
-		echo Doxygen 1.8.16 is not supported due to \
-			https://github.com/doxygen/doxygen/issues/7236 please report it \
-			to your distribution
-		exit -1
-	}
-
 	qmake-qt5 --version
 	gcc --version
 
