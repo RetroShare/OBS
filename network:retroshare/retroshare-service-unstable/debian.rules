@@ -3,14 +3,15 @@
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	qmake --version
+	QT_SELECT=qt5 qmake --version
 	gcc --version
-	qmake CONFIG-=debug CONFIG+=release PREFIX=/usr LIB_DIR=/usr/lib \
-	$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
-	CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_gui \
-	CONFIG+=no_tests CONFIG+=c++14 \
-	CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
-	RetroShare.pro
+	QT_SELECT=qt5 qmake CONFIG-=debug CONFIG+=release PREFIX=/usr \
+		LIB_DIR=/usr/lib \
+		$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
+		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_gui \
+		CONFIG+=no_tests CONFIG+=c++14 \
+		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
+		RetroShare.pro
 	touch $@
 
 build: build-stamp
