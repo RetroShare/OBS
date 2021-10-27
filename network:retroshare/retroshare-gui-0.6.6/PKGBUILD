@@ -42,7 +42,7 @@ build() {
 	RS_EXTRA_VERSION="-retroshare-gui-OBS-Arch" \
 	CONFIG-=debug CONFIG+=release \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service CONFIG+=rs_jsonapi \
+	CONFIG+=no_retroshare_service CONFIG+=rs_jsonapi CONFIG+=c++14 \
 	RetroShare.pro
 	make -j$(nproc)
 }
