@@ -37,7 +37,7 @@ build() {
 	gcc --version
 
 	cd "${srcdir}/RetroShare"
-	qmake-qt5 PREFIX=/usr DATA_DIR=/usr/share/retroshare \
+	qmake-qt5 PREFIX=/usr RS_DATA_DIR=/usr/share/retroshare \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
