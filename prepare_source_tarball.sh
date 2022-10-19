@@ -50,6 +50,21 @@ ORIG_DIR="$(pwd)"
 	git -C ${SRC_DIR} submodule update --init supportlibs/jni.hpp
 }
 
+[ "$(ls "${SRC_DIR}/libbitdht" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force libbitdht
+}
+
+[ "$(ls "${SRC_DIR}/libretroshare" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force libretroshare
+}
+
+[ "$(ls "${SRC_DIR}/openpgpsdk" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force openpgpsdk
+}
+
 cd "${WORK_DIR}"
 rsync -a --delete \
 	--exclude='.git' \
