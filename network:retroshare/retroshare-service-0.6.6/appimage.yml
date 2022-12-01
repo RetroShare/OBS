@@ -1,4 +1,4 @@
-app: retroshare-service
+app: retroshare-service-0.6.6
 
 build:
   packages:
