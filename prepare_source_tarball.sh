@@ -35,10 +35,40 @@ ORIG_DIR="$(pwd)"
 	git -C ${SRC_DIR} submodule update --init supportlibs/rapidjson 
 }
 
+[ "$(ls "${SRC_DIR}/supportlibs/libsam3" | wc -l)" -lt "5" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init supportlibs/libsam3
+}
+
+[ "$(ls "${SRC_DIR}/supportlibs/cmark" | wc -l)" -lt "5" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init supportlibs/cmark
+}
+
+[ "$(ls "${SRC_DIR}/supportlibs/jni.hpp" | wc -l)" -lt "5" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init supportlibs/jni.hpp
+}
+
+[ "$(ls "${SRC_DIR}/libbitdht" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force libbitdht
+}
+
+[ "$(ls "${SRC_DIR}/libretroshare" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force libretroshare
+}
+
+[ "$(ls "${SRC_DIR}/openpgpsdk" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force openpgpsdk
+}
+
 cd "${WORK_DIR}"
 rsync -a --delete \
 	--exclude='.git' \
-	--filter=':- build_scripts/OBS/.gitignore' \
+	--exclude='.osc/*' \
 	"${SRC_DIR}/" RetroShare/
 
 ## Source_Version File
