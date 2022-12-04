@@ -67,8 +67,18 @@ ORIG_DIR="$(pwd)"
 
 cd "${WORK_DIR}"
 rsync -a --delete \
-	--exclude='.git' \
-	--exclude='.osc/*' \
+	--exclude='**.git*' \
+	--exclude='/build_scripts/OBS/network:retroshare/**/.osc**' \
+	--exclude='/build_scripts/OBS/network:retroshare/**/binaries**' \
+	--exclude='/build_scripts/OBS/network:retroshare/**/*.tar.gz' \
+	--exclude='*.a' --exclude='*.so' --exclude='*.o' --exclude='**~' \
+	--exclude='*.pro.user' \
+	--exclude='.gradle/' \
+	--exclude='**.kdev4' \
+	--exclude='/.kdev4/**' \
+	--exclude='CMakeLists.txt.user' \
+	--include='/supportlibs/libsam3/Makefile' \
+	--exclude='Makefile**' \
 	"${SRC_DIR}/" RetroShare/
 
 ## Source_Version File
@@ -120,11 +130,17 @@ cat ${OBS_SPEC_GUI}
 echo "###"
 echo "Making Archive ..."
 tar -zcf ${TAR_FILE} RetroShare/
-MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
 SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
+MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
 echo ""
 echo "MD5                              Size     Name"
 echo "${MD5} ${SIZE} ${TAR_FILE}"
 mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
 rm -rf "${WORK_DIR}" 
 echo "Preparation for git version ${VERSION} and debian ${DEBVERSION} finished."
+
+[ "$SIZE" -ge "50000000" ] &&
+{
+	echo "${TAR_FILE} is $SIZE bigger the 50MB some error must have happened!"
+	exit -1
+}
