@@ -65,6 +65,11 @@ ORIG_DIR="$(pwd)"
 	git -C ${SRC_DIR} submodule update --init --remote --force openpgpsdk
 }
 
+[ "$(ls "${SRC_DIR}/retroshare-webui" | wc -l)" -lt "1" ] &&
+{
+	git -C ${SRC_DIR} submodule update --init --remote --force retroshare-webui
+}
+
 cd "${WORK_DIR}"
 rsync -a --delete \
 	--exclude='**.git*' \
