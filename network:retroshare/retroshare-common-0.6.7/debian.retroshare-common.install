@@ -1,0 +1,12 @@
+debian/tmp/usr/share/retroshare/bdboot.txt
+debian/tmp/usr/share/retroshare/webui/app.js
+debian/tmp/usr/share/retroshare/webui/index.html
+debian/tmp/usr/share/retroshare/webui/styles.css
+debian/tmp/usr/share/retroshare/webui/images/retroshare.svg
+debian/tmp/usr/share/retroshare/webui/images/user.svg
+debian/tmp/usr/share/retroshare/webui/webfonts/fa-solid-900.eot
+debian/tmp/usr/share/retroshare/webui/webfonts/fa-solid-900.svg
+debian/tmp/usr/share/retroshare/webui/webfonts/fa-solid-900.ttf
+debian/tmp/usr/share/retroshare/webui/webfonts/fa-solid-900.woff
+debian/tmp/usr/share/retroshare/webui/webfonts/fa-solid-900.woff2
+
