@@ -112,6 +112,7 @@ BUILD_CC=""
 BUILD_CXX=""
 BUILD_DEEPSEARCH="CONFIG+=rs_deep_search"
 BUILD_JSONAPI="CONFIG+=rs_jsonapi"
+BUILD_WEBUI="CONFIG+=rs_webui"
 QMAKE="qmake-qt5"
 
 %if %{defined centos_version}
@@ -141,8 +142,8 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	RS_EXTRA_VERSION="-retroshare-gui-OBS-rpm" \
 	CONFIG-=debug CONFIG+=release \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service  CONFIG+=c++14 \
-	${BUILD_JSONAPI} ${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
+	CONFIG+=no_retroshare_service CONFIG+=c++14 \
+	${BUILD_JSONAPI} ${BUILD_WEBUI} ${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
 	RetroShare.pro
 make -j$(nproc)
 
