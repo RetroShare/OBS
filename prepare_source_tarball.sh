@@ -11,80 +11,94 @@ function define_default_value()
 	[ -z "${!VAR_NAME}" ] && export ${VAR_NAME}="${DEFAULT_VALUE}"
 }
 
-define_default_value WORK_DIR "$(mktemp --directory)/"
-define_default_value TAR_FILE "RetroShare.tar.gz"
-define_default_value SRC_DIR "$(realpath $(dirname $BASH_SOURCE)/../../)"
-
 ORIG_DIR="$(pwd)"
+TMP_DIR=$(mktemp --directory)
+
+cd $TMP_DIR
+git clone --depth 1 git@github.com:csoler/retroshare.git RetroShare
+cd RetroShare/build_scripts/OBS
+
+# define_default_value WORK_DIR "$(mktemp --directory)/"
+define_default_value TAR_FILE "RetroShare.tar.gz"
+define_default_value SRC_DIR ${TMP_DIR}/RetroShare
+
+cd ${TMP_DIR}
 
 [ "$(ls "${SRC_DIR}/supportlibs/restbed/" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/restbed
-	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --init dependency/asio
-	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --init dependency/catch
-	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --init dependency/kashmir
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/restbed
+	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --depth 1 --init dependency/asio
+	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --depth 1 --init dependency/catch
+	git -C ${SRC_DIR}"/supportlibs/restbed" submodule update --depth 1 --init dependency/kashmir
 }
 
 [ "$(ls "${SRC_DIR}/supportlibs/udp-discovery-cpp" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/udp-discovery-cpp 
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/udp-discovery-cpp 
+}
+
+[ "$(ls "${SRC_DIR}/build_scripts/OBS" | wc -l)" -lt "5" ] &&
+{
+	git -C ${SRC_DIR} submodule update --depth 1 --init build_scripts/OBS 
 }
 
 [ "$(ls "${SRC_DIR}/supportlibs/rapidjson" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/rapidjson 
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/rapidjson 
 }
 
 [ "$(ls "${SRC_DIR}/supportlibs/libsam3" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/libsam3
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/libsam3
 }
 
 [ "$(ls "${SRC_DIR}/supportlibs/cmark" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/cmark
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/cmark
 }
 
 [ "$(ls "${SRC_DIR}/supportlibs/jni.hpp" | wc -l)" -lt "5" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init supportlibs/jni.hpp
+	git -C ${SRC_DIR} submodule update --depth 1 --init supportlibs/jni.hpp
 }
 
 [ "$(ls "${SRC_DIR}/libbitdht" | wc -l)" -lt "1" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init --remote --force libbitdht
+	git -C ${SRC_DIR} submodule update --depth 1 --init --remote --force libbitdht
 }
 
 [ "$(ls "${SRC_DIR}/libretroshare" | wc -l)" -lt "1" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init --remote --force libretroshare
+	git -C ${SRC_DIR} submodule update --depth 1 --init --remote --force libretroshare
 }
 
 [ "$(ls "${SRC_DIR}/openpgpsdk" | wc -l)" -lt "1" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init --remote --force openpgpsdk
+	git -C ${SRC_DIR} submodule update --depth 1 --init --remote --force openpgpsdk
 }
 
 [ "$(ls "${SRC_DIR}/retroshare-webui" | wc -l)" -lt "1" ] &&
 {
-	git -C ${SRC_DIR} submodule update --init --remote --force retroshare-webui
+	git -C ${SRC_DIR} submodule update --depth 1 --init --remote --force retroshare-webui
 }
 
-cd "${WORK_DIR}"
-rsync -a --delete \
-	--exclude='**.git*' \
-	--exclude='/build_scripts/OBS/network:retroshare/**/.osc**' \
-	--exclude='/build_scripts/OBS/network:retroshare/**/binaries**' \
-	--exclude='/build_scripts/OBS/network:retroshare/**/*.tar.gz' \
-	--exclude='*.a' --exclude='*.so' --exclude='*.o' --exclude='**~' \
-	--exclude='*.pro.user' \
-	--exclude='.gradle/' \
-	--exclude='**.kdev4' \
-	--exclude='/.kdev4/**' \
-	--exclude='CMakeLists.txt.user' \
-	--include='/supportlibs/libsam3/Makefile' \
-	--exclude='Makefile**' \
-	"${SRC_DIR}/" RetroShare/
+# cd "${WORK_DIR}"
+# rsync -a --delete \
+# 	--exclude='**.git*' \
+# 	--exclude='/build_scripts/OBS/network:retroshare/**/.osc**' \
+# 	--exclude='/build_scripts/OBS/network:retroshare/**/binaries**' \
+# 	--exclude='/build_scripts/OBS/network:retroshare/**/*.tar.gz' \
+# 	--exclude='*.a' --exclude='*.so' --exclude='*.o' --exclude='**~' \
+# 	--exclude='*.pro.user' \
+# 	--exclude='.gradle/' \
+# 	--exclude='*.txt' \
+# 	--exclude='*.log' \
+# 	--exclude='**.kdev4' \
+# 	--exclude='/.kdev4/**' \
+# 	--exclude='CMakeLists.txt.user' \
+# 	--include='/supportlibs/libsam3/Makefile' \
+# 	--exclude='Makefile**' \
+# 	"${SRC_DIR}/" RetroShare/
 
 ## Source_Version File
 #RE_VERSION='s/^[[:alpha:]](.*)-g.*$/\1/g'
@@ -119,8 +133,8 @@ cat ${DEB_CHGLOG_GUI}
 echo "###"
 
 ## Debian Description
-DEB_DESCR_GUI="RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
-DEB_DESCR_CMN="RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
+DEB_DESCR_GUI=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
+DEB_DESCR_CMN=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
 sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}-1/g" ${DEB_DESCR_GUI}
 sed -i "s/Version: 0.6.9999/Version: ${DEBVERSION}-1/g" ${DEB_DESCR_CMN}
 echo "### Debian GUI Description"
@@ -128,7 +142,7 @@ cat ${DEB_DESCR_GUI}
 echo "###"
 
 ## openSUSE:Specfile
-OBS_SPEC_GUI="RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec"
+OBS_SPEC_GUI=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec"
 sed -i "s/Version:       0.6.9999/Version:       ${DEBVERSION}/g" ${OBS_SPEC_GUI}
 echo "### openSUSE:Specfile"
 cat ${OBS_SPEC_GUI}
@@ -141,7 +155,7 @@ echo ""
 echo "MD5                              Size     Name"
 echo "${MD5} ${SIZE} ${TAR_FILE}"
 mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
-rm -rf "${WORK_DIR}" 
+#rm -rf "${TMP_DIR}" 
 echo "Preparation for git version ${VERSION} and debian ${DEBVERSION} finished."
 
 [ "$SIZE" -ge "50000000" ] &&
