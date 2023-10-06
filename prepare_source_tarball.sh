@@ -27,11 +27,10 @@ TMP_DIR=$(mktemp --directory)
 OBS_DIR=$(mktemp --directory)
 
 cd $TMP_DIR
-git clone git@github.com:csoler/retroshare.git RetroShare	# full depth because we want the last tag
+git clone git@github.com:csoler/retroshare.git retroshare-0.6.7		# full depth because we want the last tag
 
 # define_default_value WORK_DIR "$(mktemp --directory)/"
-define_default_value TAR_FILE "RetroShare.tar.gz"
-define_default_value SRC_DIR ${TMP_DIR}/RetroShare
+define_default_value SRC_DIR ${TMP_DIR}/retroshare-0.6.7
 
 cd ${TMP_DIR}
 
@@ -130,7 +129,10 @@ fi
 
 RE_VERSION='s/^[[:alpha:]]//g'
 VERSION=`git -C ${SRC_DIR} describe`
-DEBVERSION=`echo $VERSION | sed -E "$RE_VERSION" | sed "s/-/./g"`
+DEBVERSION=`echo $VERSION | sed -e "s/-/./2g"`
+
+# Remove the 'v' in the tags. The future tags should start with version number!
+DEBVERSION=`echo ${DEBVERSION} | cut -c2-`
 
 echo VERSION: ${VERSION}
 echo DEB VERSION: ${DEBVERSION}
@@ -138,67 +140,83 @@ echo DEB VERSION: ${DEBVERSION}
 echo SRC_DIR: ${SRC_DIR}
 pause
 
-echo ${VERSION} > RetroShare/Source_Version
-cat RetroShare/Source_Version
+echo ${VERSION} > ${SRC_DIR}/Source_Version
+cat ${SRC_DIR}/Source_Version
 
 ## Update Debian ChangeLog
 
 DEB_CHGLOG_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/debian.changelog"
 DEB_CHGLOG_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/debian.changelog"
->${DEB_CHGLOG_GUI}
-function logentry() {
-	local version=$1
-	local describe=`git -C ${SRC_DIR} describe ${version} | sed -E "$RE_VERSION"`
-	echo "retroshare-gui-unstable ($describe) unstable; urgency=low"
-	echo
-	git -C ${SRC_DIR} show $version --quiet --oneline --format="  * %s:%b"
-	echo
-	git -C ${SRC_DIR} show $version --quiet --oneline --format=" -- %an <%ae>  %aD"
-	echo
-}
-git -C ${SRC_DIR} log -10 --pretty=format:%H | (
-	while read version; do
-		logentry $version >> ${DEB_CHGLOG_GUI}
-	done
-)
-sed "s/retroshare-gui-unstable/retroshare-common-unstable/g" ${DEB_CHGLOG_GUI} > ${DEB_CHGLOG_CMN}
-echo "### Copying GUI Changelog"
-cp ${DEB_CHGLOG_GUI} ${ORIG_DIR}/changelog
-echo "###"
+# >${DEB_CHGLOG_GUI}
+# function logentry() {
+# 	local version=$1
+# 	local describe=`git -C ${SRC_DIR} describe ${version} | sed -E "$RE_VERSION"`
+# 	echo "retroshare-gui-unstable ($describe) unstable; urgency=low"
+# 	echo
+# 	git -C ${SRC_DIR} show $version --quiet --oneline --format="  * %s:%b"
+# 	echo
+# 	git -C ${SRC_DIR} show $version --quiet --oneline --format=" -- %an <%ae>  %aD"
+# 	echo
+# }
+# git -C ${SRC_DIR} log -10 --pretty=format:%H | (
+# 	while read version; do
+# 		logentry $version >> ${DEB_CHGLOG_GUI}
+# 	done
+# )
+#sed "s/retroshare-gui-unstable/retroshare-common-unstable/g" ${DEB_CHGLOG_GUI} > ${DEB_CHGLOG_CMN}
+
+define_default_value TAR_FILE retroshare_${DEBVERSION}.tar.gz
+define_default_value DSC_FILE retroshare_${DEBVERSION}.dsc
+define_default_value CHG_FILE retroshare_${DEBVERSION}.changes
 
 ## Create .tar.gz archive.
 
 echo "Making Archive ..."
 find ${TMP_DIR} -name ".git*" -exec rm -rf \{\} \;
-tar -zcf ${TAR_FILE} RetroShare/
 
-SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
-MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
+#tar -zcf ${TAR_FILE} RetroShare/
+# SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
+# MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
+# SH1=`sha1sum ${TAR_FILE} | awk '{ print $1 }'`
+# SH2=`sha256sum ${TAR_FILE} | awk '{ print $1 }'`
+# 
+# echo ""
+# echo "MD5                              Size     Name"
+# echo "${MD5} ${SIZE} ${TAR_FILE}"
+# mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
 
-echo ""
-echo "MD5                              Size     Name"
-echo "${MD5} ${SIZE} ${TAR_FILE}"
-mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
+## Debian package
 
+#  DEB_DESCR_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
+#  DEB_DESCR_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
+#  
+#  echo DEB_DESCR_GUI=${DEB_DESCR_GUI}
+#  echo DSC_FILE=${DSC_FILE}
+#  echo ORIG_DIR=${ORIG_DIR}
+#  echo MD5=${MD5}
+#  echo SH1=${SH1}
+#  echo SH2=${SH2}
+#  echo DEBVERSION=${DEBVERSION}
+#  
+#  cp ${DEB_DESCR_GUI} ${ORIG_DIR}/${DSC_FILE}
+#  sed -i "s/MD5SUM/${MD5}/g" ${ORIG_DIR}/${DSC_FILE}
+#  sed -i "s/SHA1SUM/${SH1}/g" ${ORIG_DIR}/${DSC_FILE}
+#  sed -i "s/SHA2SUM/${SH2}/g" ${ORIG_DIR}/${DSC_FILE}
+#  sed -i "s/FILESIZE/${SIZE}/g" ${ORIG_DIR}/${DSC_FILE}
+#  sed -i "s/XXXXXX/${DEBVERSION}/g" ${ORIG_DIR}/${DSC_FILE}
 
-## Debian Description
+cp -r ${ORIG_DIR}/debian.template ${SRC_DIR}/debian	# default files. Some of them are modified afterwards
+cat ${ORIG_DIR}/debian.template/changelog | sed -e s/XXXXXX/retroshare/g | sed -e s/YYYYYY/${DEBVERSION}/g > ${SRC_DIR}/debian/changelog
 
-function updatedsc() {		# $1 dsc file to update, $2 md5, $3 size, $4 deb version
-	echo Updating file \"$1\" with md5=$2 and size=$3
-	sed -i "s/DEBTRANSFORM-TAR/$2\ $3/g" $1 
-	sed -i "s/Version: 0.6.9999/Version: $4-1/g" $1
-}
+cd ${SRC_DIR}
+debuild -S -us -uc -i
 
-DEB_DESCR_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
-DEB_DESCR_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
-
-updatedsc ${DEB_DESCR_GUI} $MD5 $SIZE $DEBVERSION
-updatedsc ${DEB_DESCR_CMN} $MD5 $SIZE $DEBVERSION
-
-echo "### Copying Debian GUI Description"
-cp ${DEB_DESCR_GUI} ${ORIG_DIR}/retroshare-gui-unstable.dsc
-cp ${DEB_DESCR_CMN} ${ORIG_DIR}/retroshare-common-unstable.dsc
-echo "###"
+cp ../retroshare_${DEBVERSION}.dsc              ${ORIG_DIR}/
+cp ../retroshare_${DEBVERSION}.tar.gz           ${ORIG_DIR}/
+cp ../retroshare_${DEBVERSION}_source.build     ${ORIG_DIR}/
+cp ../retroshare_${DEBVERSION}_source.buildinfo ${ORIG_DIR}/
+cp ../retroshare_${DEBVERSION}_source.changes   ${ORIG_DIR}/
+pause 
 
 ## openSUSE:Specfile
 
@@ -222,8 +240,8 @@ rm -rf "${TMP_DIR}"
 rm -rf "${OBS_DIR}" 
 echo "Preparation for git version ${VERSION} and debian ${DEBVERSION} finished."
 
-[ "$SIZE" -ge "50000000" ] &&
-{
-	echo "${TAR_FILE} is $SIZE bigger the 50MB some error must have happened!"
-	exit -1
-}
+# [ "$SIZE" -ge "50000000" ] &&
+# {
+# 	echo "${TAR_FILE} is $SIZE bigger the 50MB some error must have happened!"
+# 	exit -1
+# }

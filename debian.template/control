@@ -1,0 +1,36 @@
+Source: retroshare
+Section: devel
+Priority: standard
+Maintainer: Retroshare Dev Team <retroshare.project@gmail.com>
+Standards-Version: 4.1.4
+Homepage: https://retroshare.cc
+Build-Depends: debhelper (>= 9),  git, libglib2.0-dev, libupnp-dev, libssl-dev, libxss-dev, libbz2-dev, libxslt1-dev, libcurl4-openssl-dev, libsqlcipher-dev, libmicrohttpd-dev, qttools5-dev, libqt5x11extras5-dev, qtbase5-dev, qt5-qmake, qtbase5-dev-tools
+
+Package: retroshare-common
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Secure communication with friends
+ RetroShare is a Free and Open Source, private and secure decentralized 
+ communication platform. It lets you to securely chat and share files with your 
+ friends and family, using a web-of-trust to authenticate peers and OpenSSL to 
+ encrypt all communication. RetroShare provides filesharing, chat, messages, 
+ forums and channels.
+ 
+Package: retroshare-service
+Architecture: any
+Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}, gnome-keyring
+Description: Secure communication with friends
+ retroshare-service provides a headless version of the Retroshare software,
+ which can be installed without Qt, run on low-end machines, and that can
+ be controlled by a web interface.
+ 
+Package: retroshare-gui
+Architecture: any
+Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}, gnome-keyring
+Description: Secure communication with friends
+ RetroShare is a Free and Open Source, private and secure decentralized 
+ communication platform. It lets you to securely chat and share files with your 
+ friends and family, using a web-of-trust to authenticate peers and OpenSSL to 
+ encrypt all communication. RetroShare provides filesharing, chat, messages, 
+ forums and channels.
+ 
