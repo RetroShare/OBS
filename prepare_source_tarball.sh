@@ -18,10 +18,16 @@ if ! test -f ${ORIG_DIR}/prepare_source_tarball.sh ; then
 	exit 1
 fi
 
+function pause() {
+	echo press [ENTER] to continue
+	read
+}
+
 TMP_DIR=$(mktemp --directory)
+OBS_DIR=$(mktemp --directory)
 
 cd $TMP_DIR
-git clone --depth 1 git@github.com:csoler/retroshare.git RetroShare
+git clone git@github.com:csoler/retroshare.git RetroShare	# full depth because we want the last tag
 
 # define_default_value WORK_DIR "$(mktemp --directory)/"
 define_default_value TAR_FILE "RetroShare.tar.gz"
@@ -92,7 +98,9 @@ cd ${TMP_DIR}
 # Checks if OBS has been updated. In release mode, it is, since we use the scripts from the remote repository. In testing mode it is not, so
 # we use the scripts from the local clone from where the scripts are being edited.
 
-if ! test -d ./RetroShare/build_scripts/OBS/network:retroshare ; then
+echo
+
+if true ; then
 	echo Using local OBS code for creating the package \(testing mode\)
 	rsync -a --delete \
 		--exclude='**.git*' \
@@ -109,31 +117,34 @@ if ! test -d ./RetroShare/build_scripts/OBS/network:retroshare ; then
 		--exclude='CMakeLists.txt.user' \
 		--include='/supportlibs/libsam3/Makefile' \
 		--exclude='Makefile**' \
-		"${ORIG_DIR}/" RetroShare/build_scripts/OBS/
+		"${ORIG_DIR}/" ${OBS_DIR}/
 else
 	echo Using default committed OBS code for creating the package \(release mode\)
+	pushd ${OBS_DIR}
+	git clone git@github.com/retroshare/OBS.git 
+	popd
 fi
 
 ## Source_Version File
 #RE_VERSION='s/^[[:alpha:]](.*)-g.*$/\1/g'
+
 RE_VERSION='s/^[[:alpha:]]//g'
-VERSION="$(git -C ${SRC_DIR} describe)"
+VERSION=`git -C ${SRC_DIR} describe`
 DEBVERSION=`echo $VERSION | sed -E "$RE_VERSION" | sed "s/-/./g"`
+
+echo VERSION: ${VERSION}
+echo DEB VERSION: ${DEBVERSION}
+
+echo SRC_DIR: ${SRC_DIR}
+pause
+
 echo ${VERSION} > RetroShare/Source_Version
 cat RetroShare/Source_Version
 
-echo "Making Archive ..."
-tar -zcf ${TAR_FILE} RetroShare/
-SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
-MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
-echo ""
-echo "MD5                              Size     Name"
-echo "${MD5} ${SIZE} ${TAR_FILE}"
-mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
-
 ## Update Debian ChangeLog
-DEB_CHGLOG_GUI="RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.changelog"
-DEB_CHGLOG_CMN="RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.changelog"
+
+DEB_CHGLOG_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/debian.changelog"
+DEB_CHGLOG_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/debian.changelog"
 >${DEB_CHGLOG_GUI}
 function logentry() {
 	local version=$1
@@ -151,9 +162,24 @@ git -C ${SRC_DIR} log -10 --pretty=format:%H | (
 	done
 )
 sed "s/retroshare-gui-unstable/retroshare-common-unstable/g" ${DEB_CHGLOG_GUI} > ${DEB_CHGLOG_CMN}
-echo "### Debian GUI Changelog"
-cat ${DEB_CHGLOG_GUI}
+echo "### Copying GUI Changelog"
+cp ${DEB_CHGLOG_GUI} ${ORIG_DIR}/changelog
 echo "###"
+
+## Create .tar.gz archive.
+
+echo "Making Archive ..."
+find ${TMP_DIR} -name ".git*" -exec rm -rf \{\} \;
+tar -zcf ${TAR_FILE} RetroShare/
+
+SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
+MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
+
+echo ""
+echo "MD5                              Size     Name"
+echo "${MD5} ${SIZE} ${TAR_FILE}"
+mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
+
 
 ## Debian Description
 
@@ -163,8 +189,8 @@ function updatedsc() {		# $1 dsc file to update, $2 md5, $3 size, $4 deb version
 	sed -i "s/Version: 0.6.9999/Version: $4-1/g" $1
 }
 
-DEB_DESCR_GUI=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
-DEB_DESCR_CMN=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
+DEB_DESCR_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
+DEB_DESCR_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
 
 updatedsc ${DEB_DESCR_GUI} $MD5 $SIZE $DEBVERSION
 updatedsc ${DEB_DESCR_CMN} $MD5 $SIZE $DEBVERSION
@@ -179,16 +205,21 @@ echo "###"
 function updatespec() {    # $1 spec file to update, $2 deb version
 	sed -i "s/Version:       0.6.9999/Version:       $2/g" $1
 }
-OBS_SPEC_GUI=${SRC_DIR}/"build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec"
+OBS_SPEC_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec"
 
 updatespec ${OBS_SPEC_GUI} ${DEBVERSION}
 
 echo "### Copying GUI spec file"
 cp ${OBS_SPEC_GUI} ${ORIG_DIR}/retroshare-gui-unstable.spec
 echo "###"
-echo [DEBUG] now entering sleep mode so you can examine the directories. Press [ENTER] to continue
-read
+
+echo TMP_DIR = ${TMP_DIR}
+echo OBS_DIR = ${OBS_DIR}
+echo ORIG_DIR = ${ORIG_DIR}
+pause
+
 rm -rf "${TMP_DIR}" 
+rm -rf "${OBS_DIR}" 
 echo "Preparation for git version ${VERSION} and debian ${DEBVERSION} finished."
 
 [ "$SIZE" -ge "50000000" ] &&
