@@ -4,7 +4,7 @@ Priority: standard
 Maintainer: Retroshare Dev Team <retroshare.project@gmail.com>
 Standards-Version: 4.1.4
 Homepage: https://retroshare.cc
-Build-Depends: debhelper (>= 9),  git, libglib2.0-dev, libupnp-dev, libssl-dev, libxss-dev, libbz2-dev, libxslt1-dev, libcurl4-openssl-dev, libsqlcipher-dev, libmicrohttpd-dev, qttools5-dev, libqt5x11extras5-dev, qtbase5-dev, qt5-qmake, qtbase5-dev-tools
+Build-Depends: debhelper (>= 9), doxygen, cmake, git, libglib2.0-dev, libupnp-dev, libssl-dev, libxss-dev, libbz2-dev, libxslt1-dev, libcurl4-openssl-dev, libsqlcipher-dev, libmicrohttpd-dev, qttools5-dev, libqt5x11extras5-dev, qtbase5-dev, qt5-qmake, qtbase5-dev-tools, qtmultimedia5-dev
 
 Package: retroshare-common
 Architecture: any

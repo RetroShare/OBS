@@ -209,7 +209,7 @@ cp -r ${ORIG_DIR}/debian.template ${SRC_DIR}/debian	# default files. Some of the
 cat ${ORIG_DIR}/debian.template/changelog | sed -e s/XXXXXX/retroshare/g | sed -e s/YYYYYY/${DEBVERSION}/g > ${SRC_DIR}/debian/changelog
 
 cd ${SRC_DIR}
-debuild -S -us -uc -i
+debuild -S -us -uc -i -d
 
 cp ../retroshare_${DEBVERSION}.dsc              ${ORIG_DIR}/
 cp ../retroshare_${DEBVERSION}.tar.gz           ${ORIG_DIR}/
