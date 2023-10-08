@@ -33,8 +33,8 @@ install: build
 	dh_clean -k
 	#dh_installdirs
 	$(MAKE) INSTALL_ROOT=$(CURDIR)/debian/tmp install
-	# Remove bdboot.txt because it is shippend within retroshare-common
-	rm -f $(CURDIR)/debian/tmp/usr/share/retroshare/bdboot.txt
+	# Manually install bdboot.txt
+	install -D -m 644 libbitdht/src/bitdht/bdboot.txt $(CURDIR)/debian/tmp/usr/share/retroshare/bdboot.txt
 
 # Build architecture-independent files here.
 binary-indep: build install
