@@ -11,26 +11,30 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends
  RetroShare is a Free and Open Source, private and secure decentralized 
- communication platform. It lets you to securely chat and share files with your 
- friends and family, using a web-of-trust to authenticate peers and OpenSSL to 
- encrypt all communication. RetroShare provides filesharing, chat, messages, 
- forums and channels.
+ communication platform. Contains web interface files and DHT bootstrapping data.
+ See retroshare-gui package.
  
 Package: retroshare-service
 Architecture: any
-Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}, gnome-keyring
+Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends
  retroshare-service provides a headless version of the Retroshare software,
- which can be installed without Qt, run on low-end machines, and that can
- be controlled by a web interface.
+ which installs without Qt, runs on low-end machines, and is controlled by 
+ a web interface.
  
 Package: retroshare-gui
 Architecture: any
-Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}, gnome-keyring
+Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends
  RetroShare is a Free and Open Source, private and secure decentralized 
  communication platform. It lets you to securely chat and share files with your 
  friends and family, using a web-of-trust to authenticate peers and OpenSSL to 
  encrypt all communication. RetroShare provides filesharing, chat, messages, 
- forums and channels.
+ forums and channels. This package provides with the desktop client based on Qt.
+
+Package: retroshare-friendserver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Secure communication with friends
+ A friend server for retroshare Tor nodes.
  
