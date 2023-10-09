@@ -27,7 +27,7 @@ TMP_DIR=$(mktemp --directory)
 OBS_DIR=$(mktemp --directory)
 
 cd $TMP_DIR
-git clone git@github.com:csoler/retroshare.git retroshare-0.6.7		# full depth because we want the last tag
+git clone git@github.com:retroshare/retroshare.git retroshare-0.6.7		# full depth because we want the last tag
 
 # define_default_value WORK_DIR "$(mktemp --directory)/"
 define_default_value SRC_DIR ${TMP_DIR}/retroshare-0.6.7
@@ -138,7 +138,6 @@ echo VERSION: ${VERSION}
 echo DEB VERSION: ${DEBVERSION}
 
 echo SRC_DIR: ${SRC_DIR}
-pause
 
 echo ${VERSION} > ${SRC_DIR}/Source_Version
 cat ${SRC_DIR}/Source_Version
@@ -216,7 +215,6 @@ cp ../retroshare_${DEBVERSION}.tar.gz           ${ORIG_DIR}/
 cp ../retroshare_${DEBVERSION}_source.build     ${ORIG_DIR}/
 cp ../retroshare_${DEBVERSION}_source.buildinfo ${ORIG_DIR}/
 cp ../retroshare_${DEBVERSION}_source.changes   ${ORIG_DIR}/
-pause 
 
 ## openSUSE:Specfile
 
@@ -234,7 +232,6 @@ echo "###"
 echo TMP_DIR = ${TMP_DIR}
 echo OBS_DIR = ${OBS_DIR}
 echo ORIG_DIR = ${ORIG_DIR}
-pause
 
 rm -rf "${TMP_DIR}" 
 rm -rf "${OBS_DIR}" 

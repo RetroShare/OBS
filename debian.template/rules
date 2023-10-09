@@ -6,7 +6,7 @@ configure-stamp:
 	cat /etc/os-release
 	QT_SELECT=qt5 qmake --version
 	gcc --version
-	QT_SELECT=qt5 qmake \
+	QT_SELECT=qt5 qmake -r \
 		CONFIG-=debug CONFIG+=release PREFIX=/usr LIB_DIR=/usr/lib \
 		CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
 		CONFIG+=retroshare_service CONFIG-=rs_deep_search \

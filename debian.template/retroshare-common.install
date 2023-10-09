@@ -1,5 +1,11 @@
 usr/share/retroshare/bdboot.txt
-webui/app.css 
-webui/app.js 
-webui/img/logo_splash.png 
-webui/index.html 
+usr/share/retroshare/webui/app.js 
+usr/share/retroshare/webui/index.html 
+usr/share/retroshare/webui/styles.css 
+usr/share/retroshare/webui/webfonts/
+usr/share/retroshare/webui/webfonts/fa-solid-900.eot
+usr/share/retroshare/webui/webfonts/fa-solid-900.svg
+usr/share/retroshare/webui/webfonts/fa-solid-900.ttf
+usr/share/retroshare/webui/webfonts/fa-solid-900.woff
+usr/share/retroshare/webui/webfonts/fa-solid-900.woff2
+usr/share/retroshare/webui/images/retroshare.svg 
