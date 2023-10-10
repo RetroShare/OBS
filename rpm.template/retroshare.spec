@@ -84,6 +84,7 @@ RetroShare provides filesharing, chat, messages and channels.
 
 %package service
 Summary: headless retroshare client, controlled by a web interface
+Requires: retroshare-common 
 %description service
 RetroShare is a Free and Open Source, private and secure decentralized 
 communication platform. Contains web interface files and DHT bootstrapping data.
@@ -94,6 +95,7 @@ see https://retroshare.cc/
 
 %package gui
 Summary: Graphical user interface for retroshare, based on Qt
+Requires: retroshare-common
 %description gui
 RetroShare is a cross-platform F2F communication platform.
 It lets you share securely with your friends, using PGP
@@ -194,6 +196,9 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+# empty files section so as to *not* build the main package
+%files
 
 %files common
 %defattr(644, root, root)
