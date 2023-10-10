@@ -5,7 +5,7 @@ License:       AGPL-3.0-or-later
 Summary:       Secure distributed chat, mail, forums, file sharing etc
 Group:         Productivity/Networking/Other
 Url:           https://retroshare.cc
-Source0:       retroshare_XXXXXX.tar.gz
+Source0:       retroshare_ZZZZZZ.tar.gz
 #Patch0:       various.patch
 BuildRoot:     %{_tmppath}/%{name}
 #Conflicts:     retroshare
@@ -76,6 +76,12 @@ BuildRequires: libqt5-qtmultimedia-devel libXScrnSaver-devel
 %undefine _debuginfo_subpackages
 %endif
 
+%description 
+RetroShare is a cross-platform F2F communication platform.
+It lets you share securely with your friends, using PGP
+to authenticate peers and OpenSSL to encrypt all communication.
+RetroShare provides filesharing, chat, messages and channels.
+
 %package service
 Summary: headless retroshare client, controlled by a web interface
 %description service
@@ -117,7 +123,7 @@ see https://retroshare.cc/
 --------
 
 %prep
-%setup -n RetroShare
+%setup -n retroshare-0.6.7
 #%%patch0 -p0
 
 %build

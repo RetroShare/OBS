@@ -129,10 +129,8 @@ fi
 
 RE_VERSION='s/^[[:alpha:]]//g'
 VERSION=`git -C ${SRC_DIR} describe`
-DEBVERSION=`echo $VERSION | sed -e "s/-/./2g"`
-
-# Remove the 'v' in the tags. The future tags should start with version number!
-DEBVERSION=`echo ${DEBVERSION} | cut -c2-`
+DEBVERSION=`echo $VERSION | sed -e "s/-/./2g" | cut -c2-`
+RPMVERSION=`echo $VERSION | sed -e "s/-/./g" | cut -c2-`
 
 echo VERSION: ${VERSION}
 echo DEB VERSION: ${DEBVERSION}
@@ -218,23 +216,20 @@ cp ../retroshare_${DEBVERSION}_source.changes   ${ORIG_DIR}/
 
 ## openSUSE:Specfile
 
-function updatespec() {    # $1 spec file to update, $2 deb version
-	sed -i "s/Version:       0.6.9999/Version:       $2/g" $1
-}
-OBS_SPEC_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec"
+# function updatespec() {    # $1 spec file to update, $2 deb version
+# 	sed -i "s/Version:       0.6.9999/Version:       $2/g" $1
+# }
+# updatespec ${OBS_SPEC_GUI} ${DEBVERSION}
 
-updatespec ${OBS_SPEC_GUI} ${DEBVERSION}
+EXTRA_VERSION=`echo ${DEBVERSION} | cut -d- -f2`
+OBS_SPEC_GUI=${ORIG_DIR}"/retroshare_${DEBVERSION}.spec"
+cat ${ORIG_DIR}/rpm.template/retroshare.spec |sed -e s/ZZZZZZ/${DEBVERSION}/g  | sed -e s/XXXXXX/${RPMVERSION}/g | sed -e s/YYYYYY/${EXTRA_VERSION}/g > ${OBS_SPEC_GUI}
 
-echo "### Copying GUI spec file"
-cp ${OBS_SPEC_GUI} ${ORIG_DIR}/retroshare-gui-unstable.spec
-echo "###"
-
-echo TMP_DIR = ${TMP_DIR}
-echo OBS_DIR = ${OBS_DIR}
-echo ORIG_DIR = ${ORIG_DIR}
+## Now cleanup
 
 rm -rf "${TMP_DIR}" 
 rm -rf "${OBS_DIR}" 
+
 echo "Preparation for git version ${VERSION} and debian ${DEBVERSION} finished."
 
 # [ "$SIZE" -ge "50000000" ] &&
