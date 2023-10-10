@@ -197,9 +197,6 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-# empty files section so as to *not* build the main package
-%files
-
 %files common
 %defattr(644, root, root)
 %{_datadir}/retroshare
