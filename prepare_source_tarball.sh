@@ -124,13 +124,11 @@ else
 	popd
 fi
 
-## Source_Version File
-#RE_VERSION='s/^[[:alpha:]](.*)-g.*$/\1/g'
-
 RE_VERSION='s/^[[:alpha:]]//g'
 VERSION=`git -C ${SRC_DIR} describe`
 DEBVERSION=`echo $VERSION | sed -e "s/-/./2g" | cut -c2-`
 RPMVERSION=`echo $VERSION | sed -e "s/-/./g" | cut -c2-`
+SRCVERSION=`echo $DEBVERSION | cut -d- -f1`
 
 echo VERSION: ${VERSION}
 echo DEB VERSION: ${DEBVERSION}
@@ -144,23 +142,6 @@ cat ${SRC_DIR}/Source_Version
 
 DEB_CHGLOG_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/debian.changelog"
 DEB_CHGLOG_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/debian.changelog"
-# >${DEB_CHGLOG_GUI}
-# function logentry() {
-# 	local version=$1
-# 	local describe=`git -C ${SRC_DIR} describe ${version} | sed -E "$RE_VERSION"`
-# 	echo "retroshare-gui-unstable ($describe) unstable; urgency=low"
-# 	echo
-# 	git -C ${SRC_DIR} show $version --quiet --oneline --format="  * %s:%b"
-# 	echo
-# 	git -C ${SRC_DIR} show $version --quiet --oneline --format=" -- %an <%ae>  %aD"
-# 	echo
-# }
-# git -C ${SRC_DIR} log -10 --pretty=format:%H | (
-# 	while read version; do
-# 		logentry $version >> ${DEB_CHGLOG_GUI}
-# 	done
-# )
-#sed "s/retroshare-gui-unstable/retroshare-common-unstable/g" ${DEB_CHGLOG_GUI} > ${DEB_CHGLOG_CMN}
 
 define_default_value TAR_FILE retroshare_${DEBVERSION}.tar.gz
 define_default_value DSC_FILE retroshare_${DEBVERSION}.dsc
@@ -170,37 +151,6 @@ define_default_value CHG_FILE retroshare_${DEBVERSION}.changes
 
 echo "Making Archive ..."
 find ${TMP_DIR} -name ".git*" -exec rm -rf \{\} \;
-
-#tar -zcf ${TAR_FILE} RetroShare/
-# SIZE=`wc -c ${TAR_FILE} | awk '{ print $1 }'`
-# MD5=`md5sum ${TAR_FILE} | awk '{ print $1 }'`
-# SH1=`sha1sum ${TAR_FILE} | awk '{ print $1 }'`
-# SH2=`sha256sum ${TAR_FILE} | awk '{ print $1 }'`
-# 
-# echo ""
-# echo "MD5                              Size     Name"
-# echo "${MD5} ${SIZE} ${TAR_FILE}"
-# mv ${TAR_FILE} "${ORIG_DIR}/${TAR_FILE}"
-
-## Debian package
-
-#  DEB_DESCR_GUI=${OBS_DIR}"/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc"
-#  DEB_DESCR_CMN=${OBS_DIR}"/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc"
-#  
-#  echo DEB_DESCR_GUI=${DEB_DESCR_GUI}
-#  echo DSC_FILE=${DSC_FILE}
-#  echo ORIG_DIR=${ORIG_DIR}
-#  echo MD5=${MD5}
-#  echo SH1=${SH1}
-#  echo SH2=${SH2}
-#  echo DEBVERSION=${DEBVERSION}
-#  
-#  cp ${DEB_DESCR_GUI} ${ORIG_DIR}/${DSC_FILE}
-#  sed -i "s/MD5SUM/${MD5}/g" ${ORIG_DIR}/${DSC_FILE}
-#  sed -i "s/SHA1SUM/${SH1}/g" ${ORIG_DIR}/${DSC_FILE}
-#  sed -i "s/SHA2SUM/${SH2}/g" ${ORIG_DIR}/${DSC_FILE}
-#  sed -i "s/FILESIZE/${SIZE}/g" ${ORIG_DIR}/${DSC_FILE}
-#  sed -i "s/XXXXXX/${DEBVERSION}/g" ${ORIG_DIR}/${DSC_FILE}
 
 cp -r ${ORIG_DIR}/debian.template ${SRC_DIR}/debian	# default files. Some of them are modified afterwards
 cat ${ORIG_DIR}/debian.template/changelog | sed -e s/XXXXXX/retroshare/g | sed -e s/YYYYYY/${DEBVERSION}/g > ${SRC_DIR}/debian/changelog
@@ -216,14 +166,13 @@ cp ../retroshare_${DEBVERSION}_source.changes   ${ORIG_DIR}/
 
 ## openSUSE:Specfile
 
-# function updatespec() {    # $1 spec file to update, $2 deb version
-# 	sed -i "s/Version:       0.6.9999/Version:       $2/g" $1
-# }
-# updatespec ${OBS_SPEC_GUI} ${DEBVERSION}
-
 EXTRA_VERSION=`echo ${DEBVERSION} | cut -d- -f2`
 OBS_SPEC_GUI=${ORIG_DIR}"/retroshare_${DEBVERSION}.spec"
 cat ${ORIG_DIR}/rpm.template/retroshare.spec |sed -e s/ZZZZZZ/${DEBVERSION}/g  | sed -e s/XXXXXX/${RPMVERSION}/g | sed -e s/YYYYYY/${EXTRA_VERSION}/g > ${OBS_SPEC_GUI}
+
+## AppImage
+
+cat ${ORIG_DIR}/appimage.template/appimage.yml | sed -e s/XXXXXX/${DEBVERSION}/g | sed -e s/YYYYYY/${SRCVERSION}/g > ${ORIG_DIR}/appimage.yml
 
 ## Now cleanup
 

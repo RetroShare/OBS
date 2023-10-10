@@ -85,6 +85,7 @@ RetroShare provides filesharing, chat, messages and channels.
 %package service
 Summary: headless retroshare client, controlled by a web interface
 Requires: retroshare-common 
+Recommends: tor
 %description service
 RetroShare is a Free and Open Source, private and secure decentralized 
 communication platform. Contains web interface files and DHT bootstrapping data.
@@ -96,6 +97,7 @@ see https://retroshare.cc/
 %package gui
 Summary: Graphical user interface for retroshare, based on Qt
 Requires: retroshare-common
+Recommends: tor
 %description gui
 RetroShare is a cross-platform F2F communication platform.
 It lets you share securely with your friends, using PGP
@@ -107,6 +109,7 @@ see https://retroshare.cc/
 
 %package friendserver
 Summary: A friend server for retroshare Tor nodes.
+Requires: tor
 %description friendserver
 A friend server for retroshare Tor nodes.
 
