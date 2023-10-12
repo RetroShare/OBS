@@ -9,7 +9,7 @@ Source0:       retroshare_ZZZZZZ.tar.gz
 #Patch0:       various.patch
 BuildRoot:     %{_tmppath}/%{name}
 #Conflicts:     retroshare
-BuildRequires: cmake git openssl-devel 
+BuildRequires: cmake git openssl-devel hicolor-icon-theme
 
 %if %{defined centos_version}
 # Neither miniupnpc-devel nor libupnp-devel are available on CentOS
@@ -201,13 +201,13 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 rm -rf $RPM_BUILD_ROOT
 
 %files common
-%defattr(644, root, root)
-%{_datadir}/retroshare
+%dir %{_datadir}/retroshare
+%{_datadir}/retroshare/webui/
+%{_datadir}/retroshare/webui/webfonts/
 %{_datadir}/retroshare/bdboot.txt
 %{_datadir}/retroshare/webui/app.js 
 %{_datadir}/retroshare/webui/index.html 
 %{_datadir}/retroshare/webui/styles.css 
-%{_datadir}/retroshare/webui/webfonts/
 %{_datadir}/retroshare/webui/webfonts/fa-solid-900.eot
 %{_datadir}/retroshare/webui/webfonts/fa-solid-900.svg
 %{_datadir}/retroshare/webui/webfonts/fa-solid-900.ttf
@@ -222,7 +222,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/retroshare-friendserver
 
 %files gui
-%defattr(-, root, root)
 %{_bindir}/retroshare
 %{_datadir}/applications/retroshare.desktop 
 %{_datadir}/icons/hicolor/128x128/apps/retroshare.png 
@@ -230,7 +229,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/icons/hicolor/48x48/apps/retroshare.png
 %{_datadir}/icons/hicolor/64x64/apps/retroshare.png
 %{_datadir}/pixmaps/retroshare.xpm
+%dir %{_datadir}/retroshare/qss
 %{_datadir}/retroshare/qss/retroclassic.qss 
+%dir %{_datadir}/retroshare/sounds
 %{_datadir}/retroshare/sounds/alert.wav 
 %{_datadir}/retroshare/sounds/chat1.wav 
 %{_datadir}/retroshare/sounds/chat2.wav 
@@ -246,6 +247,48 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/retroshare/sounds/send1.wav 
 %{_datadir}/retroshare/sounds/send2.wav 
 %{_datadir}/retroshare/sounds/startup.wav 
+%dir %{_datadir}/retroshare/stylesheets
+%dir %{_datadir}/retroshare/stylesheets/Bubble
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-blue
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-green
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-grey
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-orange
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-red
+%dir %{_datadir}/retroshare/stylesheets/Bubble/history/variants
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img/bubble-blue
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img/bubble-green
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img/bubble-grey
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img/bubble-orange
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/img/bubble-red
+%dir %{_datadir}/retroshare/stylesheets/Bubble/private/variants
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img/bubble-blue
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img/bubble-green
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img/bubble-grey
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img/bubble-orange
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/img/bubble-red
+%dir %{_datadir}/retroshare/stylesheets/Bubble/public/variants
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img/bubble-blue
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img/bubble-green
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img/bubble-grey
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img/bubble-orange
+%dir %{_datadir}/retroshare/stylesheets/Bubble/src/img/bubble-red
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img/bubble-blue
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img/bubble-green
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img/bubble-grey
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img/bubble-orange
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/img/bubble-red
+%dir %{_datadir}/retroshare/stylesheets/Bubble_Compact/private/variants
 %{_datadir}/retroshare/stylesheets/Bubble/history/hincoming.htm 
 %{_datadir}/retroshare/stylesheets/Bubble/history/houtgoing.htm 
 %{_datadir}/retroshare/stylesheets/Bubble/history/img/bubble-blue/bubble_BC.png 

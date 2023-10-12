@@ -167,7 +167,7 @@ cp ../retroshare_${DEBVERSION}_source.changes   ${ORIG_DIR}/
 ## openSUSE:Specfile
 
 EXTRA_VERSION=`echo ${DEBVERSION} | cut -d- -f2`
-OBS_SPEC_GUI=${ORIG_DIR}"/retroshare_${DEBVERSION}.spec"
+OBS_SPEC_GUI=${ORIG_DIR}"/retroshare.spec"
 cat ${ORIG_DIR}/rpm.template/retroshare.spec |sed -e s/ZZZZZZ/${DEBVERSION}/g  | sed -e s/XXXXXX/${RPMVERSION}/g | sed -e s/YYYYYY/${EXTRA_VERSION}/g > ${OBS_SPEC_GUI}
 
 ## AppImage
