@@ -3,8 +3,16 @@
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	QT_SELECT=qt5 qmake --version
+	build_scripts/OBS/get_source_version_cmake.sh
 	gcc --version
+# TODO: OBS build environement is isolated from the internet, instruct CMake to
+#look for restbed and other dependencies in the supportlib directory
+#	cmake \
+#		-DRS_SERVICE_DESKTOP=ON -DRS_FORUM_DEEP_INDEX=ON -DRS_WARN_LESS=ON \
+#		-DRS_WARN_DEPRECATED=OFF \
+#		$(shell build_scripts/OBS/get_source_version_cmake.sh) \
+#		-DRS_MINI_VERSION=9999 \
+#		retroshare-service/CMakeLists.txt
 	QT_SELECT=qt5 qmake CONFIG-=debug CONFIG+=release PREFIX=/usr \
 		LIB_DIR=/usr/lib \
 		$(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
@@ -35,6 +43,7 @@ install: build
 	#dh_installdirs
 	$(MAKE) INSTALL_ROOT=$(CURDIR)/debian/tmp install
 	# Remove bdboot.txt because it is shippend within retroshare-common
+	find $(CURDIR)/debian/tmp | grep bdboot.txt
 	rm $(CURDIR)/debian/tmp/usr/share/retroshare/bdboot.txt
 
 # Build architecture-independent files here.
