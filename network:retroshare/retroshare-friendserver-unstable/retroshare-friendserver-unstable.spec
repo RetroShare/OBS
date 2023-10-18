@@ -53,7 +53,7 @@ BuildRequires: gcc-c++
 BuildRequires: libzlib-devel libbzip2-devel
 BuildRequires: libqt5core-devel
 
-# On Mageia we need to avoid this error at linking time
+# On Mageia we need this build dependency to avoid this error at linking time
 # g++: error: /usr/lib64/libQt5Gui.so: No such file or directory
 BuildRequires: libqt5gui-devel
 %endif
