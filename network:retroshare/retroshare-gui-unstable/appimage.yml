@@ -36,7 +36,7 @@ script:
   - sed -i 's/retroshare.xpm/retroshare/' data/retroshare.desktop
   - sed -i 's|/usr/bin/retroshare|retroshare|' data/retroshare.desktop
   - qmake-qt5 QMAKE_CC=gcc-5 QMAKE_CXX=g++-5 PREFIX=/usr $(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 CONFIG-=debug CONFIG+=release CONFIG+=no_retroshare_plugins CONFIG+=no_tests CONFIG+=rs_jsonapi CONFIG+=rs_deep_search CONFIG+=retroshare_gui CONFIG+=no_retroshare_service CONFIG+=no_retroshare_friendserver CONFIG+=c++14 CONFIG+=appimage
-  - make -j$(nproc) || make -j$(nproc) || make
+  - make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
   - make INSTALL_ROOT=$BUILD_APPDIR install
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - linuxdeployqt $BUILD_APPDIR/usr/share/applications/*.desktop -bundle-non-qt-libs -verbose=3 -no-strip -extra-plugins=iconengines/libqsvgicon.so
