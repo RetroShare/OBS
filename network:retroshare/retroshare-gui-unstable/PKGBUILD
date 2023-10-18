@@ -8,7 +8,7 @@
 
 pkgname=retroshare-gui-unstable
 pkgver=unstable
-pkgrel=20190724
+pkgrel=20231018
 pkgdesc="Serverless encrypted instant messenger with filesharing, chatgroups, e-mail. System service version."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://retroshare.cc/"
@@ -41,7 +41,7 @@ build() {
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service CONFIG+=no_rs_friendserver \
+	CONFIG+=no_retroshare_service CONFIG+=no_retroshare_friendserver \
 	CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
 	RetroShare.pro
 	make -j$(nproc)
