@@ -41,7 +41,8 @@ build() {
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
+	CONFIG+=no_retroshare_service CONFIG+=no_rs_friendserver \
+	CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
 	RetroShare.pro
 	make -j$(nproc)
 }

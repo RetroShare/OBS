@@ -138,7 +138,7 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG-=debug CONFIG+=release \
 	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
-	CONFIG+=no_retroshare_service  CONFIG+=c++14 \
+	CONFIG+=no_retroshare_service CONFIG+=no_rs_friendserver CONFIG+=c++14 \
 	${BUILD_JSONAPI} ${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
 	RetroShare.pro
 make -j$(nproc)
