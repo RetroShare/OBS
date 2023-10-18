@@ -129,8 +129,9 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	BIN_DIR="%{_bindir}" LIB_DIR="%{_libdir}" \
 	RS_DATA_DIR="%{_datadir}/retroshare" \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
-	CONFIG+=release CONFIG-=debug CONFIG+=no_retroshare_gui \
-	CONFIG+=no_tests CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
+	CONFIG+=release CONFIG-=debug CONFIG+=no_retroshare_friendserver \
+	CONFIG+=no_retroshare_gui CONFIG+=no_tests \
+	CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
 	CONFIG+=c++14 \
 	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
 	RetroShare.pro

@@ -29,7 +29,7 @@ script:
   - gcc --version
   - ls $(which gcc)*
   - ls $(which g++)*
-  - qmake-qt5 QMAKE_CC=gcc-5 QMAKE_CXX=g++-5 PREFIX=/usr $(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 CONFIG-=debug CONFIG+=release CONFIG+=no_retroshare_plugins CONFIG+=ipv6 CONFIG+=no_tests CONFIG+=rs_jsonapi CONFIG+=rs_deep_search CONFIG+=no_retroshare_gui CONFIG+=retroshare_service CONFIG+=appimage CONFIG+=c++14
+  - qmake-qt5 QMAKE_CC=gcc-5 QMAKE_CXX=g++-5 PREFIX=/usr $(shell build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 CONFIG-=debug CONFIG+=release CONFIG+=no_retroshare_plugins CONFIG+=ipv6 CONFIG+=no_tests CONFIG+=rs_jsonapi CONFIG+=rs_deep_search CONFIG+=no_retroshare_friendserver CONFIG+=no_retroshare_gui CONFIG+=retroshare_service CONFIG+=appimage CONFIG+=c++14
   - make -j$(nproc) || make -j$(nproc) || make
   - make INSTALL_ROOT=$BUILD_APPDIR install
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH

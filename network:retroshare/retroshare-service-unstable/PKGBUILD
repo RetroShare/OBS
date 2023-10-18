@@ -40,8 +40,8 @@ build() {
 	qmake-qt5 PREFIX=/usr RS_DATA_DIR=/usr/share/retroshare \
 		$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 		CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
-		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_gui \
-		CONFIG+=no_tests \
+		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_friendserver \
+		CONFIG+=no_retroshare_gui CONFIG+=no_tests \
 		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
 		RetroShare.pro
 	make -j$(nproc)
