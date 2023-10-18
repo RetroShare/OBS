@@ -1,0 +1,17 @@
+<!--https://en.opensuse.org/openSUSE:Build_Service_Concept_SourceService-->
+<services>
+    <!--https://github.com/openSUSE/obs-service-extract_file/blob/master/extract_file.service-->
+    <service name="extract_file">
+        <param name="archive">RetroShare.tar.gz</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/appimage.yml</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.changelog</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.compat</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.control</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.retroshare-friendserver-unstable.install</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.rules</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/debian.series</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/PKGBUILD</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/retroshare-friendserver-unstable.dsc</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-friendserver-unstable/retroshare-friendserver-unstable.spec</param>
+    </service>
+</services>
