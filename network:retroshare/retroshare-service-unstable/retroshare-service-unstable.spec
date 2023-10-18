@@ -105,6 +105,17 @@ BUILD_CXX=""
 BUILD_DEEPSEARCH="CONFIG+=rs_deep_search"
 QMAKE="qmake-qt5"
 
+# Keep default sam3 beaviour for most distributions
+BUILD_SAM3=""
+%if %{defined mageia} || %{defined fedora_version}
+# libsam3 won't compile in Mageia and Fedora due to some too lax code
+# see https://github.com/RetroShare/libretroshare/issues/60
+# see https://github.com/i2p/libsam3/issues/20
+# see https://github.com/i2p/libsam3/pull/21
+# keep disabled until the fixes are accepted upstream
+BUILD_SAM3="CONFIG+=no_rs_sam3 CONFIG+=no_rs_sam3_libsam3"
+%endif
+
 %if %{defined centos_version}
 # Xapian is not availabe on CentOS
 BUILD_DEEPSEARCH="CONFIG+=no_rs_deep_search"
@@ -133,7 +144,7 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	CONFIG+=no_retroshare_gui CONFIG+=no_tests \
 	CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
 	CONFIG+=c++14 \
-	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
+	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} ${BUILD_SAM3} \
 	RetroShare.pro
 make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
 
