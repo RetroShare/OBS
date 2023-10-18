@@ -14,5 +14,4 @@
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-unstable/retroshare-service-unstable.dsc</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-unstable/retroshare-service-unstable.spec</param>
     </service>
-    <service name="appimage"/>
 </services>

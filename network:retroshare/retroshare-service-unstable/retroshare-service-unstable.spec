@@ -135,7 +135,7 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	CONFIG+=c++14 \
 	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} \
 	RetroShare.pro
-make -j$(nproc)
+make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
 
 %install
 rm -rf $RPM_BUILD_ROOT

@@ -3,12 +3,12 @@
     <!--https://github.com/openSUSE/obs-service-extract_file/blob/master/extract_file.service-->
     <service name="extract_file">
         <param name="archive">RetroShare.tar.gz</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.changelog</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.compat</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.control</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.retroshare-common-unstable.install</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.rules</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.series</param>
-        <param name="files">*/build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.changelog</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.compat</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.control</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.retroshare-common-unstable.install</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.rules</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/debian.series</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-unstable/retroshare-common-unstable.dsc</param>
     </service>
 </services>
