@@ -1,0 +1,36 @@
+app: retroshare-service-0.6.7
+
+build:
+  packages:
+    - desktop-file-utils
+    - doxygen
+    - gcc5
+    - gcc5-c++
+    - glib2-devel
+    - libbz2-devel
+    - libqt5-qtbase-devel
+    - libqt5-qttools-devel
+    - libupnp-devel
+    - libxapian-devel
+    - linuxdeployqt
+    - openssl-devel
+    - sqlcipher-devel
+    - update-desktop-files
+
+ingredients:
+  packages:
+    - tor
+
+script:
+  - cd $BUILD_SOURCE_DIR
+  - tar -xf RetroShare.tar.gz
+  - cd RetroShare
+  - qmake-qt5 --version
+  - gcc --version
+  - ls $(which gcc)*
+  - ls $(which g++)*
+  - qmake-qt5 QMAKE_CC=gcc-5 QMAKE_CXX=g++-5 PREFIX=/usr $(shell build_scripts/OBS/get_source_version.sh) CONFIG-=debug CONFIG+=release CONFIG+=no_retroshare_plugins CONFIG+=ipv6 CONFIG+=no_tests CONFIG+=rs_jsonapi CONFIG+=no_rs_webui CONFIG+=no_retroshare_friendserver CONFIG+=no_retroshare_gui CONFIG+=retroshare_service CONFIG+=appimage CONFIG+=c++14
+  - make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
+  - make INSTALL_ROOT=$BUILD_APPDIR install
+  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - linuxdeployqt $BUILD_APPDIR/usr/share/applications/*.desktop -bundle-non-qt-libs -verbose=3 -no-strip

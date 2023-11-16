@@ -1,8 +1,8 @@
-## OBS
+= OBS
 
 This folder regroup scripts to make package using [OpenBuildService](https://build.opensuse.org/project/show/network:retroshare)
 
-### Make your own OBS Fork Project
+== Make your own OBS Fork Project
 
 You needs an [OBS](https://build.opensuse.org/) account.
 You can make one using Sign Up link.
@@ -11,11 +11,33 @@ Once logged, go to your "Home Project" "Overview".
 In "Packages" frame, click on "Branch Existing Package".
 Then choose:
 
-    Original project name = network:retroshare
-    Original package name = branch you want to build \(Some required retroshare-common-unstable\)
-    Branch package name = the name of your branch. Let it empty will take original name.
+Original project name = network:retroshare
+Original package name = branch you want to build (Some requires retroshare-common-unstable)
+Branch package name = the name of your branch. Let it empty will take original name.
 
-Or you can make your own blank package. You only need to put in it corresponding _service file and made TarBall.
+Or you can make your own blank package. You only need to put in it corresponding
++_service+ file and made TarBall.
+
+.Example _service file
+--------------------------------------------------------------------------------
+<!--https://en.opensuse.org/openSUSE:Build_Service_Concept_SourceService-->
+<services>
+    <!--https://github.com/openSUSE/obs-service-extract_file/blob/master/extract_file.service-->
+    <service name="extract_file">
+        <param name="archive">RetroShare.tar.gz</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/appimage.yml</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.changelog</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.compat</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.control</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.retroshare-gui-unstable.install</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.rules</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/debian.series</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/PKGBUILD</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.dsc</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-gui-unstable/retroshare-gui-unstable.spec</param>
+    </service>
+</services>
+--------------------------------------------------------------------------------
 
 Now your packages defined, you have to select for which distribution you want to build.
 For that go to your "Home Project" "Repositories".
@@ -23,7 +45,8 @@ Click on "Add from a Distribution" to get the available list.
 Select the ones you want.
 You will see them in right of "Overview" page with their results.
 
-### Prepare your TarBall
+
+== Prepare your TarBall
 
 As OBS's VM are not connected to Internet, you have to provide a TarBall (tar.gz file) of your project to build it.
 This file \(RetroShare.tar.gz\) need to be uploaded to your package.
@@ -31,15 +54,16 @@ The script \(build_scripts/OBS/prepare_source_tarball.sh\) in git repository is 
 
 You need first to have a clone copy on your local computer:
 
-    git clone https://github.com/RetroShare/RetroShare.git RetroShare
+`git clone https://github.com/RetroShare/RetroShare.git RetroShare`
 
 And initialized OBS sub-module:
 
-    git -C ./RetroShare/ submodule update --init build_scripts/OBS
+`git -C ./RetroShare/ submodule update --init build_scripts/OBS`
 
 Then call prepare script
 
-    ./RetroShare/build_scripts/OBS/prepare_source_tarball.sh
+`./RetroShare/build_scripts/OBS/prepare_source_tarball.sh`
 
-In your OBS "Home Project" "Overview", you can now upload this RetroShare.tar.gz file.
-The build start directly after.
+In your OBS "Home Project" "Overview", you can now upload this
++RetroShare.tar.gz+ file.
+The build should automatically start just after.

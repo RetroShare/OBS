@@ -1,0 +1,53 @@
+# Maintainer: Gioacchino Mazzurco <gio@altermundi.net>
+# Contributor: AsamK
+# Contributor: sehraf
+# Contributor: stqn
+# Contributor: JHeaton <jheaton at archlinux dot us>
+# Contributor: Tristero <tristero at online dot de>
+# Contributor: funkyou
+
+pkgname=retroshare-gui
+pkgver=0.6.7
+pkgrel=20231116
+pkgdesc="Serverless encrypted instant messenger with filesharing, chatgroups, e-mail. System service version."
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+url="https://retroshare.cc/"
+license=('AGPL' 'GPL' 'LGPL')
+depends=('bzip2' 'libupnp' 'libxss' 'libzip' 'openssl' 'qt5-multimedia' 'qt5-x11extras' 'rapidjson' 'sqlcipher' 'xapian-core')
+makedepends=('cmake' 'doxygen' 'pkgconf' 'qt5-tools')
+provides=('retroshare')
+conflicts=('retroshare')
+
+source=(RetroShare.tar.gz)
+md5sums=(SKIP)
+
+prepare() {
+	cd "${srcdir}/RetroShare"
+}
+
+build() {
+	[ "$(doxygen --version)" == "1.8.16" ] && {
+		echo Doxygen 1.8.16 is not supported due to \
+			https://github.com/doxygen/doxygen/issues/7236 please report it \
+			to your distribution
+		exit -1
+	}
+
+	qmake-qt5 --version
+	gcc --version
+
+	cd "${srcdir}/RetroShare"
+	qmake-qt5 PREFIX=/usr RS_DATA_DIR=/usr/share/retroshare \
+	$(build_scripts/OBS/get_source_version.sh) \
+	CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
+	CONFIG+=no_retroshare_plugins CONFIG+=retroshare_gui CONFIG+=no_tests \
+	CONFIG+=no_retroshare_service CONFIG+=no_retroshare_friendserver \
+	CONFIG+=rs_efs CONFIG+=rs_webui CONFIG+=rs_jsonapi \
+	RetroShare.pro
+	make -j$(nproc)
+}
+
+package() {
+	cd "${srcdir}/RetroShare"
+	make INSTALL_ROOT="${pkgdir}" install
+}
