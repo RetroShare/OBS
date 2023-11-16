@@ -106,7 +106,6 @@ ls $(which g++)*
 
 BUILD_CC=""
 BUILD_CXX=""
-BUILD_DEEPSEARCH="CONFIG+=rs_deep_search"
 QMAKE="qmake-qt5"
 
 # Keep default sam3 beaviour for most distributions
@@ -146,9 +145,9 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	$(build_scripts/OBS/get_source_version.sh) RS_MINI_VERSION=9999 \
 	CONFIG+=release CONFIG-=debug CONFIG+=no_retroshare_friendserver \
 	CONFIG+=no_retroshare_gui CONFIG+=no_tests \
-	CONFIG+=retroshare_service CONFIG+=rs_jsonapi \
+	CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=no_rs_webui \
 	CONFIG+=c++14 \
-	${BUILD_DEEPSEARCH} ${BUILD_SQLCIPHER} ${BUILD_SAM3} \
+	${BUILD_SQLCIPHER} ${BUILD_SAM3} \
 	RetroShare.pro
 make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
 

@@ -1,7 +1,7 @@
 Source: retroshare-service-unstable
 Section: devel
 Priority: standard
-Maintainer: Cyril Soler <csoler@users.sourceforge.net>
+Maintainer: Retroshare Team <contact@retroshare.cc>
 Standards-Version: 3.9.3
 Homepage: https://retroshare.cc
 

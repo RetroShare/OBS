@@ -12,7 +12,7 @@ configure-stamp:
 		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_gui \
 		CONFIG+=no_tests CONFIG+=no_retroshare_service \
 		CONFIG+=retroshare_friendserver \
-		CONFIG+=no_rs_deep_search CONFIG+=no_rs_jsonapi \
+		CONFIG+=no_rs_jsonapi \
 		CONFIG+=c++14 \
 		RetroShare.pro
 	touch $@

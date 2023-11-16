@@ -42,7 +42,7 @@ build() {
 		CONFIG-=debug CONFIG+=release CONFIG+=ipv6 \
 		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_friendserver \
 		CONFIG+=no_retroshare_gui CONFIG+=no_tests \
-		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_deep_search \
+		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=no_rs_webui \
 		RetroShare.pro
 	make -j$(nproc)
 }
