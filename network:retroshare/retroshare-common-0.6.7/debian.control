@@ -1,11 +1,11 @@
-Source: retroshare-common-unstable
+Source: retroshare-common
 Section: devel
 Priority: standard
 Maintainer: Retroshare Team <contact@retroshare.cc>
 Standards-Version: 3.9.3
 Homepage: https://retroshare.cc
 
-Package: retroshare-common-unstable
+Package: retroshare-common
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends

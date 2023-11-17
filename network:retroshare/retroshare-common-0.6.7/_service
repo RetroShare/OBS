@@ -1,0 +1,14 @@
+<!--https://en.opensuse.org/openSUSE:Build_Service_Concept_SourceService-->
+<services>
+    <!--https://github.com/openSUSE/obs-service-extract_file/blob/master/extract_file.service-->
+    <service name="extract_file">
+        <param name="archive">RetroShare.tar.gz</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.changelog</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.compat</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.control</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.retroshare-common-0.6.7.install</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.rules</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.series</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/retroshare-common-0.6.7.dsc</param>
+    </service>
+</services>
