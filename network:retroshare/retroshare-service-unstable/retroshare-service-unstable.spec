@@ -13,8 +13,13 @@ BuildRequires: cmake git openssl-devel
 
 %if %{defined centos_version}
 # Neither miniupnpc-devel nor libupnp-devel are available on CentOS
+%elif 0%{?fedora_version}
+BuildRequires: miniupnpc-devel
+%elif %{defined mageia}
+BuildRequires: lib64miniupnpc-devel
 %else
-BuildRequires: libupnp-devel
+BuildRequires: libminiupnpc-devel
+#BuildRequires: libupnp-devel
 %endif
 
 %if %{defined centos_version}
@@ -70,6 +75,7 @@ BuildRequires: libxapian-devel update-desktop-files
 %undefine _debuginfo_subpackages
 %endif
 
+
 %description
 RetroShare is a cross-platform F2F communication platform.
 It lets you share securely with your friends, using PGP
@@ -88,9 +94,6 @@ see https://retroshare.cc/
 
 %build
 
-echo centos_version: %{?centos_version} mageia: %{?mageia} \
-	mageia_version: %{?mageia_version}
-
 [ "$(doxygen --version)" == "1.8.16" ] && {
 	echo Doxygen 1.8.16 is not supported due to \
 		https://github.com/doxygen/doxygen/issues/7236 please report it \
@@ -98,7 +101,7 @@ echo centos_version: %{?centos_version} mageia: %{?mageia} \
 	exit -1
 }
 
-nproc
+cmake --version
 qmake --version || qmake-qt5 --version
 gcc --version
 ls $(which gcc)*
@@ -139,6 +142,7 @@ BUILD_CC="QMAKE_CC=gcc-7"
 BUILD_CXX="QMAKE_CXX=g++-7"
 %endif
 
+## Qmake
 $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	BIN_DIR="%{_bindir}" LIB_DIR="%{_libdir}" \
 	RS_DATA_DIR="%{_datadir}/retroshare" \
@@ -149,10 +153,27 @@ $QMAKE $BUILD_CC $BUILD_CXX QMAKE_STRIP=echo PREFIX="%{_prefix}" \
 	CONFIG+=c++14 \
 	${BUILD_SQLCIPHER} ${BUILD_SAM3} \
 	RetroShare.pro
+
+## CMake
+# mkdir cmake_build_tree
+# cd cmake_build_tree
+# cmake -DRS_SERVICE_DESKTOP=ON -DRS_FORUM_DEEP_INDEX=ON -DRS_WARN_LESS=ON \
+# 	-DRS_WARN_DEPRECATED=OFF -DRS_SPLIT_DEBUG=ON \
+# 	$(../build_scripts/OBS/get_source_version_cmake.sh) \
+# 	-DRS_MINI_VERSION=9999 \
+# 	-DCMAKE_INSTALL_PREFIX=$RPM_BUILD_ROOT/%{_prefix} \
+# 	../retroshare-service/CMakeLists.txt -B.
+
 make -j$(nproc) || (make && (echo "Parallel build failed" ; exit -1))
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+## CMake
+# cd cmake_build_tree
+# make install
+
+## Qmake
 make INSTALL_ROOT=$RPM_BUILD_ROOT install
 
 %if %{defined centos_version} || %{defined mageia}
@@ -169,5 +190,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644, root, root)
 %{_datadir}/retroshare
 %{_datadir}/retroshare/bdboot.txt
+
+## CMake only
+# %{_prefix}/data/retroshare-service.desktop
+# %{_datadir}/icons/hicolor/128x128/apps/retroshare-service.png
+# %{_datadir}/icons/hicolor/48x48/apps/retroshare-service.png
+# %{_datadir}/icons/hicolor/scalable/retroshare-service.svg
 
 %changelog
