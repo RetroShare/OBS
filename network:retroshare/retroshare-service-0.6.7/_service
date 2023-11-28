@@ -7,7 +7,7 @@
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.changelog</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.compat</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.control</param>
-        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.retroshare-service-0.6.7.install</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.retroshare-service.install</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.rules</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/debian.series</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-service-0.6.7/PKGBUILD</param>

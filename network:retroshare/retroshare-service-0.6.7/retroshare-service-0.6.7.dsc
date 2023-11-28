@@ -1,6 +1,6 @@
 Format: 1.0
-Source: retroshare-service-0.6.7
-Binary: retroshare-service-0.6.7
+Source: retroshare-service
+Binary: retroshare-service
 Architecture: any
 Version: 0.6.7
 Maintainer: Gioacchino Mazzurco <gio@retroshare.cc>
