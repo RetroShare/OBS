@@ -1,13 +1,13 @@
-Source: retroshare-service-0.6.7
+Source: retroshare-service
 Section: devel
 Priority: standard
 Maintainer: Retroshare Team <contact@retroshare.cc>
 Standards-Version: 3.9.3
 Homepage: https://retroshare.cc
 
-Package: retroshare-service-0.6.7
+Package: retroshare-service
 Architecture: any
-Depends: retroshare-common-0.6.7, ${shlibs:Depends}, ${misc:Depends}
+Depends: retroshare-common, ${shlibs:Depends}, ${misc:Depends}
 Description: Secure communication with friends
  RetroShare is a Free and Open Source, private and secure decentralized 
  communication platform. It lets you to securely chat and share files with your 

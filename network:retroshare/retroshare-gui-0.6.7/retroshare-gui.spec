@@ -1,5 +1,5 @@
-Name:          retroshare-gui
-Version:       0.6.7
+Name: retroshare-gui
+Version: 0.6.7
 Release:       0
 License:       AGPL-3.0-or-later
 Summary:       Secure distributed chat, mail, forums, file sharing etc

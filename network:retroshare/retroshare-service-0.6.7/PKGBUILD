@@ -1,4 +1,4 @@
-# Maintainer: Gioacchino Mazzurco <gio@retroshare.cc>
+# Maintainer: Gioacchino Mazzurco <gio@altermundi.net>
 # Contributor: AsamK
 # Contributor: sehraf
 # Contributor: stqn
@@ -6,9 +6,9 @@
 # Contributor: Tristero <tristero at online dot de>
 # Contributor: funkyou
 
-pkgname=retroshare-service-0.6.7
-pkgver=stable
-pkgrel=20231116
+pkgname=retroshare-service
+pkgver=0.6.7
+pkgrel=20231128
 pkgdesc="Serverless encrypted instant messenger with filesharing, chatgroups, e-mail. System service version."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://retroshare.cc/"

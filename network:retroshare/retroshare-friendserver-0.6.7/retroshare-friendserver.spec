@@ -1,5 +1,5 @@
-Name:          retroshare-friendserver
-Version:       0.6.7
+Name: retroshare-friendserver
+Version: 0.6.7
 Release:       0
 License:       AGPL-3.0-or-later
 Summary:       Secure distributed chat, mail, forums, file sharing etc
@@ -8,7 +8,7 @@ Url:           https://retroshare.cc
 Source0:       RetroShare.tar.gz
 #Patch0:       various.patch
 BuildRoot:     %{_tmppath}/%{name}
-Conflicts:     retroshare-friendserver
+Conflicts: retroshare-friendserver-unstable
 BuildRequires: cmake git openssl-devel
 
 %if %{defined centos_version}

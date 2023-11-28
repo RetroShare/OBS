@@ -9,6 +9,6 @@
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.retroshare-common.install</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.rules</param>
         <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/debian.series</param>
-        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/retroshare-common-0.6.7.dsc</param>
+        <param name="files">RetroShare/build_scripts/OBS/network:retroshare/retroshare-common-0.6.7/retroshare-common.dsc</param>
     </service>
 </services>
