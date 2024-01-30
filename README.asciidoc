@@ -4,7 +4,7 @@ This folder regroup scripts to make package using [OpenBuildService](https://bui
 
 == Make your own OBS Fork Project
 
-You needs an [OBS](https://build.opensuse.org/) account.
+You need an [OBS](https://build.opensuse.org/) account.
 You can make one using Sign Up link.
 
 Once logged, go to your "Home Project" "Overview".
