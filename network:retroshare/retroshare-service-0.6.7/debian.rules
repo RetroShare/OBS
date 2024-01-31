@@ -16,7 +16,7 @@ configure-stamp:
 		$(shell build_scripts/OBS/get_source_version.sh) \
 		CONFIG+=no_retroshare_plugins CONFIG+=no_retroshare_friendserver \
 		CONFIG+=no_retroshare_gui CONFIG+=no_tests CONFIG+=c++14 \
-		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=rs_webui \
+		CONFIG+=retroshare_service CONFIG+=rs_jsonapi CONFIG+=no_rs_webui \
 		RetroShare.pro
 	touch $@
 
