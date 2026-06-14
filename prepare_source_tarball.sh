@@ -3,7 +3,6 @@
 # Script to prepare RetroShare Android package building toolchain
 #
 # Copyright (C) 2019-2023  Gioacchino Mazzurco <gio@retroshare.cc>
-# Copyright (C) 2020-2023  Asociación Civil Altermundi <info@altermundi.net>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU Affero General Public License as published by the
